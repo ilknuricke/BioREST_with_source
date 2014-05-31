@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script language="javascript">
+    var xmlhttp;
+    function init() {
+       xmlhttp = new XMLHttpRequest();
+    }
+
+    function getdetails() {
+        var url="http://127.0.0.1:8080/BioREST/resources/alignment?sequences="+document.getElementById('sequence1').value+","+document.getElementById('sequence2').value;
+   
+        //alert(url); 
+        xmlhttp.open('GET',url,true);
+        xmlhttp.send(null);
+        xmlhttp.onreadystatechange = function() {
+                  //alert(xmlhttp.readyState);
+                  if ( xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                       //alert("Successful response");
+                       document.getElementById('response').value = xmlhttp.responseText;
+                 }
+                 //else
+                 //      alert("Error ->" + xmlhttp.status);
+        };
+    }
+  </script>
+
+
+<style>
+{ margin: 0; padding: 0; }
+
+html { 
+        background: url('dna.jpg') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+</style>
+
+
+  </head>
+  <body  onload="init()">
+   <h1 style="font-family:arial;color:white;font-size:50px;">BioREST</h1>
+   <table>
+  <tr><td></td>
+      <td align="CENTER"><h2 style="font-family:arial;color:white;font-size:30px;">DNA sequence pair alignment</h2></td>
+    <tr>
+   <td style="font-family:arial;color:white;font-size:20px;" align="RIGHT">Copy and paste the 1st DNA Sequence: </br>example: CCGTACC</td>
+   <td><textarea id="sequence1" rows="3" cols="100"></textarea></td>
+   </tr>
+
+   <tr>
+   <td style="font-family:arial;color:white;font-size:20px;" align="RIGHT">Copy and paste the 2nd DNA Sequence:</td>
+   <td><textarea id="sequence2" rows="3" cols="100"></textarea></td>
+   </tr>
+
+   <tr>
+       <td align="RIGHT"> <input type="button" value="Align" onclick="getdetails()"/>
+   </tr>
+    <tr>
+       <td align="RIGHT" style="font-family:arial;color:white;font-size:20px;">Result: </td>
+       <td><textarea id="response" rows="10" cols="100" disabled wrap="off"> </textarea> </td>
+   </tr>
+   <tr><td></td><td style="font-family:arial;color:yellow;font-size:18px;">This service implements the <a href="http://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm" style="color:red">Needleman-Wunsch</a> algorithm for global sequence alignment </br> (gap penalty=2, mismatch penalty=1).</br>See <a href="http://mindwriting.org/blog/?p=13" style="color:red">my blog entry</a> for more information and source code.</td>
+   </table>
+  </body>
+</html>
